@@ -3,172 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to AI Platform</title>
+    <title>Professional Design System</title>
     <style>
-        /* Notion-inspired styles */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        /* CSS Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        :root {
-            --notion-background: #F7F6F3;
-            --notion-text-primary: #1C1C1C;
-            --notion-text-secondary: #4C4C4C;
-            --notion-element-bg: #FFFFFF;
-            --notion-element-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            --notion-element-radius: 8px;
-            --notion-accent-color: #4C4CFF; /* Notion's primary accent color */
+        html {
+            font-size: 100%;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
         }
 
         body {
-            font-family: 'Inter', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            color: var(--notion-text-primary);
-            background-color: var(--notion-background);
-        }
-        
-        nav {
-            background-color: var(--notion-element-bg);
-            padding: 16px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            border-radius: var(--notion-element-radius);
-        }
-        
-        nav a {
-            color: var(--notion-text-primary);
-            text-decoration: none;
-            margin-right: 20px;
-            font-size: 16px;
-            font-weight: 500;
-        }
-        
-        nav a:hover {
-            color: var(--notion-accent-color);
-        }
-        
-        .hero {
-            background-color: var(--notion-element-bg);
-            padding: 80px 24px;
-            text-align: center;
-            box-shadow: var(--notion-element-shadow);
-            border-radius: var(--notion-element-radius);
-        }
-        
-        .hero h1 {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-        
-        .hero p {
-            font-size: 20px;
-            color: var(--notion-text-secondary);
-            margin-bottom: 32px;
-        }
-        
-        .content-section {
-            padding: 48px 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .content-card {
-            background-color: var(--notion-element-bg);
-            padding: 24px;
-            border-radius: var(--notion-element-radius);
-            box-shadow: var(--notion-element-shadow);
-            max-width: 800px;
-            width: 100%;
-            margin-bottom: 32px;
-        }
-        
-        .content-card h2 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--notion-accent-color);
-        }
-        
-        .content-card p {
-            font-size: 16px;
-            color: var(--notion-text-secondary);
-            line-height: 1.5;
-        }
-        
-        .content-card input,
-        .content-card textarea {
-            width: 100%;
-            padding: 12px 16px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: var(--notion-element-radius);
-            box-sizing: border-box;
-        }
-        
-        .content-card #character-count {
-            font-size: 14px;
-            color: var(--notion-text-secondary);
-            margin-top: 8px;
-        }
-        
-        footer {
-            background-color: var(--notion-text-primary);
-            color: var(--notion-background);
-            padding: 16px 24px;
-            text-align: center;
-            font-size: 14px;
-            border-radius: var(--notion-element-radius) var(--notion-element-radius) 0 0;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        footer p {
-            margin: 0;
+        article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+
+        blockquote, q {
+            quotes: none;
+        }
+
+        blockquote:before, blockquote:after, q:before, q:after {
+            content: "";
+        }
+
+        /* Design System Variables */
+        :root {
+            /* Colors */
+            --color-primary: #fff;
+            --color-secondary: #000;
+            --color-accent: #4ea7fc;
+            --color-background: #eb5757;
+            --color-surface: #4cb782;
+            --color-text: #fc7840;
+            --color-text-secondary: #f2c94c;
+            --color-border: #5e6ad2;
+            --color-success: #68cc58;
+            --color-warning: #d4b144;
+            --color-border-tertiary: rgba(94, 106, 210, 0.2);
+
+            /* Typography */
+            --font-monospace: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            --font-inter: 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-family: var(--font-monospace);
+            
+            /* Font Sizes */
+            --title-8-size: 0.75rem;
+            --font-size-base: var(--title-8-size);
+            
+            /* Font Weights */
+            --font-weight-medium: 500;
+            
+            /* Line Heights */
+            --title-8-line-height: 1.2;
+            --line-height: var(--title-8-line-height);
+
+            /* Spacing */
+            --spacing-xs: 0;
+            --spacing-sm: 0;
+            --spacing-md: 0;
+            --spacing-lg: 3px;
+            --spacing-xl: 6px;
+            --spacing-2xl: 16px;
+
+            /* Shadows */
+            --shadow-none: none;
+            --shadow-tiny: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-low: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+            --shadow-stack-low: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+            --shadow-sm: var(--shadow-tiny, var(--shadow-none)), 0 0 0 1px var(--color-border-tertiary);
+            --shadow-md: var(--shadow-low);
+
+            /* Border Radius */
+            --border-radius: 50%;
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+        }
+
+        /* Base Styles */
+        body {
+            font-family: var(--font-family);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            line-height: var(--line-height);
+            color: var(--color-text);
+            background-color: var(--color-primary);
+        }
+
+        /* Button Component */
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-xl) var(--spacing-2xl);
+            font-family: inherit;
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            line-height: var(--line-height);
+            border: none;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            text-decoration: none;
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        .button:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Button Variants */
+        .button--primary {
+            background-color: var(--color-accent);
+            color: var(--color-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .button--secondary {
+            background-color: var(--color-surface);
+            color: var(--color-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .button--tertiary {
+            background-color: var(--color-text-secondary);
+            color: var(--color-secondary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Button Hover States */
+        @media (any-hover: hover) {
+            .button--primary:not([disabled]):hover {
+                filter: brightness(110%);
+                box-shadow: var(--shadow-md);
+            }
+
+            .button--secondary:not([disabled]):hover {
+                filter: brightness(125%);
+                box-shadow: var(--shadow-md);
+            }
+
+            .button--tertiary:not([disabled]):hover {
+                filter: brightness(95%);
+                box-shadow: var(--shadow-md);
+            }
+        }
+
+        /* Button Active States */
+        .button--primary:not([disabled]):active,
+        .button--primary.button--active:not([disabled]) {
+            filter: brightness(95%);
+            box-shadow: var(--shadow-stack-low);
+        }
+
+        .button--secondary:not([disabled]):active,
+        .button--secondary.button--active:not([disabled]) {
+            filter: brightness(98%);
+            box-shadow: var(--shadow-stack-low);
+        }
+
+        .button--tertiary:not([disabled]):active,
+        .button--tertiary.button--active:not([disabled]) {
+            filter: brightness(90%);
+            box-shadow: var(--shadow-stack-low);
+        }
+
+        /* Typography Components */
+        .title {
+            font-family: var(--font-inter);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            line-height: var(--line-height);
+            color: var(--color-secondary);
+        }
+
+        .text {
+            font-family: inherit;
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            line-height: var(--line-height);
+            color: var(--color-text);
+        }
+
+        /* Layout Components */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-2xl);
+        }
+
+        .card {
+            background-color: var(--color-primary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .grid {
+            display: grid;
+            gap: var(--spacing-2xl);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        /* Status Indicators */
+        .status {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--spacing-lg) var(--spacing-xl);
+            border-radius: var(--border-radius-sm);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .status--success {
+            background-color: var(--color-success);
+            color: var(--color-primary);
+        }
+
+        .status--warning {
+            background-color: var(--color-warning);
+            color: var(--color-secondary);
+        }
+
+        .status--error {
+            background-color: var(--color-background);
+            color: var(--color-primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--spacing-xl);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-xl);
+            }
+
+            .button {
+                width: 100%;
+            }
+        }
+
+        /* Dark Theme Support */
+        [data-theme="light"] .button--secondary:not([disabled]):hover {
+            filter: brightness(97%);
+        }
+
+        /* Utility Classes */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .visually-hidden {
+            clip: rect(0 0 0 0);
+            clip-path: inset(50%);
+            height: 1px;
+            overflow: hidden;
+            position: absolute;
+            white-space: nowrap;
+            width: 1px;
         }
     </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="page2.html">Page 2</a>
-        <a href="page3.html">Page 3</a>
-    </nav>
-    
-    <div class="hero">
-        <h1>Welcome to AI Platform</h1>
-        <p>This page was auto-updated by AI agents. The source code is in the GitHub repository kolbydayley/hello-world-website.</p>
-    </div>
-    
-    <div class="content-section">
-        <div class="content-card">
-            <h2>Testing Staging Deployment Fix - v6</h2>
-            <p>This content has been updated via an AI workflow.</p>
-        </div>
+    <div class="container">
+        <h1 class="title">Professional Design System</h1>
         
-        <div class="content-card">
-            <h2>Text Input</h2>
-            <input type="text" id="text-input" oninput="updateCharacterCount()" placeholder="Enter text here">
-            <div id="character-count">0 characters</div>
-        </div>
-        
-        <div class="content-card">
-            <h2>Text Area</h2>
-            <textarea id="text-input" oninput="updateCharacterCount()"></textarea>
-            <div id="character-count">0 characters</div>
+        <div class="grid">
+            <div class="card">
+                <h2 class="title">Button Components</h2>
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-xl); margin-top: var(--spacing-2xl);">
+                    <button class="button button--primary">Primary Button</button>
+                    <button class="button button--secondary">Secondary Button</button>
+                    <button class="button button--tertiary">Tertiary Button</button>
+                    <button class="button button--primary" disabled>Disabled Button</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="title">Status Indicators</h2>
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-xl); margin-top: var(--spacing-2xl);">
+                    <span class="status status--success">Success Status</span>
+                    <span class="status status--warning">Warning Status</span>
+                    <span class="status status--error">Error Status</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="title">Typography</h2>
+                <div style="margin-top: var(--spacing-2xl);">
+                    <p class="text">This is body text using the design system typography tokens with proper font family, size, weight, and line height.</p>
+                </div>
+            </div>
         </div>
     </div>
-
-    <script>
-        function updateCharacterCount() {
-            var textInput = document.getElementById("text-input");
-            var characterCount = document.getElementById("character-count");
-            characterCount.textContent = textInput.value.length + " characters";
-        }
-    </script>
-
-    <footer>
-        <p>© 2026 Test Company</p>
-    </footer>
 </body>
 </html>
