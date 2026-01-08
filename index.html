@@ -15,6 +15,7 @@
             --notion-element-bg: #FFFFFF;
             --notion-element-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             --notion-element-radius: 8px;
+            --notion-accent-color: #4C4CFF; /* Notion's primary accent color */
         }
 
         body {
@@ -44,7 +45,7 @@
         }
         
         nav a:hover {
-            color: var(--notion-text-secondary);
+            color: var(--notion-accent-color);
         }
         
         .hero {
@@ -88,12 +89,29 @@
             font-size: 24px;
             font-weight: 600;
             margin-bottom: 16px;
+            color: var(--notion-accent-color);
         }
         
         .content-card p {
             font-size: 16px;
             color: var(--notion-text-secondary);
             line-height: 1.5;
+        }
+        
+        .content-card input,
+        .content-card textarea {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: var(--notion-element-radius);
+            box-sizing: border-box;
+        }
+        
+        .content-card #character-count {
+            font-size: 14px;
+            color: var(--notion-text-secondary);
+            margin-top: 8px;
         }
         
         footer {
