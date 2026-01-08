@@ -119,7 +119,6 @@
                 radial-gradient(circle at 40% 80%, rgba(124, 58, 237, 0.04) 0%, transparent 50%);
             min-height: 100vh;
             position: relative;
-            overflow-x: hidden;
         }
 
         body::before {
@@ -133,7 +132,7 @@
                 linear-gradient(135deg, transparent 0%, rgba(78, 167, 252, 0.03) 50%, transparent 100%),
                 radial-gradient(ellipse at top, rgba(78, 167, 252, 0.05) 0%, transparent 70%);
             pointer-events: none;
-            z-index: -2;
+            z-index: -1;
         }
 
         /* Subtle grid pattern overlay */
@@ -172,7 +171,8 @@
             user-select: none;
             position: relative;
             overflow: hidden;
-            min-height: 44px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
 
         .button::before {
@@ -282,9 +282,9 @@
         }
 
         h1.title {
-            font-size: clamp(2rem, 5vw, 3rem);
+            font-size: var(--font-size-4xl);
             font-weight: var(--font-weight-bold);
-            background: linear-gradient(135deg, var(--color-text) 0%, var(--color-accent) 60%, #4cb782 100%);
+            background: linear-gradient(135deg, var(--color-text) 0%, var(--color-accent) 40%, #4cb782 80%, #7c3aed 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -297,7 +297,7 @@
         h1.title::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -16px;
             left: 50%;
             transform: translateX(-50%);
             width: 60px;
@@ -310,7 +310,6 @@
             font-size: var(--font-size-xl);
             color: var(--color-text);
             font-weight: var(--font-weight-semibold);
-            margin-bottom: var(--spacing-lg);
         }
 
         .text {
@@ -360,7 +359,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 50% 0%, rgba(78, 167, 252, 0.03) 0%, transparent 50%);
+            background: radial-gradient(circle at 50% 0%, rgba(78, 167, 252, 0.03) 0%, transparent 60%);
             pointer-events: none;
         }
 
@@ -406,6 +405,7 @@
             height: 8px;
             border-radius: 50%;
             opacity: 0.9;
+            animation: statusPulse 2s ease-in-out infinite;
         }
 
         .status--success {
@@ -416,7 +416,7 @@
 
         .status--success::before {
             background: var(--color-success);
-            box-shadow: 0 0 8px rgba(76, 183, 130, 0.5);
+            box-shadow: 0 0 8px rgba(76, 183, 130, 0.6);
         }
 
         .status--warning {
@@ -427,7 +427,7 @@
 
         .status--warning::before {
             background: var(--color-warning);
-            box-shadow: 0 0 8px rgba(242, 201, 76, 0.5);
+            box-shadow: 0 0 8px rgba(242, 201, 76, 0.6);
         }
 
         .status--error {
@@ -438,7 +438,7 @@
 
         .status--error::before {
             background: var(--color-error);
-            box-shadow: 0 0 8px rgba(235, 87, 87, 0.5);
+            box-shadow: 0 0 8px rgba(235, 87, 87, 0.6);
         }
 
         /* Button and Status Container Styles */
@@ -462,46 +462,44 @@
             }
         }
 
-        @keyframes glow {
+        @keyframes statusPulse {
             0%, 100% {
-                opacity: 0.6;
+                opacity: 0.7;
+                transform: scale(1);
             }
             50% {
                 opacity: 1;
+                transform: scale(1.1);
             }
         }
 
         @keyframes titleGlow {
             0%, 100% {
-                filter: drop-shadow(0 0 10px rgba(78, 167, 252, 0.3));
+                filter: brightness(1);
             }
             50% {
-                filter: drop-shadow(0 0 20px rgba(78, 167, 252, 0.5));
+                filter: brightness(1.1);
             }
-        }
-
-        h1.title {
-            animation: fadeInUp 1s ease-out, titleGlow 3s ease-in-out infinite;
         }
 
         .card {
             animation: fadeInUp 0.8s ease-out;
         }
 
-        .card:nth-child(1) {
+        .card:nth-child(2) {
             animation-delay: 0.1s;
         }
 
-        .card:nth-child(2) {
+        .card:nth-child(3) {
             animation-delay: 0.2s;
         }
 
-        .card:nth-child(3) {
+        .card:nth-child(4) {
             animation-delay: 0.3s;
         }
 
-        .status::before {
-            animation: glow 2.5s ease-in-out infinite;
+        h1.title {
+            animation: titleGlow 4s ease-in-out infinite;
         }
 
         /* Responsive Design */
@@ -513,21 +511,20 @@
             .grid {
                 grid-template-columns: 1fr;
                 gap: var(--spacing-xl);
-                margin-top: var(--spacing-2xl);
             }
 
             .button {
                 width: 100%;
-                min-height: 48px;
+                padding: 16px 24px;
+            }
+
+            h1.title {
+                font-size: var(--font-size-3xl);
+                margin-bottom: var(--spacing-2xl);
             }
 
             .card {
                 padding: var(--spacing-xl);
-            }
-
-            .button-container,
-            .status-container {
-                gap: var(--spacing-md);
             }
         }
 
@@ -536,16 +533,16 @@
                 padding: var(--spacing-xl) var(--spacing-md);
             }
 
+            h1.title {
+                font-size: var(--font-size-2xl);
+            }
+
             .card {
                 padding: var(--spacing-lg);
             }
 
             .grid {
                 gap: var(--spacing-lg);
-            }
-
-            h2.title {
-                font-size: var(--font-size-lg);
             }
         }
 
@@ -565,25 +562,11 @@
             box-shadow: 0 0 0 4px rgba(78, 167, 252, 0.2);
         }
 
-        /* Enhanced hover effects for status indicators */
-        .status:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .status--success:hover {
-            background: rgba(76, 183, 130, 0.2);
-            border-color: rgba(76, 183, 130, 0.4);
-        }
-
-        .status--warning:hover {
-            background: rgba(242, 201, 76, 0.2);
-            border-color: rgba(242, 201, 76, 0.4);
-        }
-
-        .status--error:hover {
-            background: rgba(235, 87, 87, 0.2);
-            border-color: rgba(235, 87, 87, 0.4);
+        /* Enhanced mobile touch targets */
+        @media (max-width: 768px) {
+            .button {
+                min-height: 48px;
+            }
         }
     </style>
 </head>
