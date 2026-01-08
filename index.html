@@ -116,7 +116,7 @@
             background-image: 
                 radial-gradient(circle at 20% 50%, rgba(78, 167, 252, 0.08) 0%, transparent 50%),
                 radial-gradient(circle at 80% 20%, rgba(76, 183, 130, 0.06) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
+                radial-gradient(circle at 40% 80%, rgba(124, 58, 237, 0.04) 0%, transparent 50%);
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
@@ -133,7 +133,7 @@
                 linear-gradient(135deg, transparent 0%, rgba(78, 167, 252, 0.03) 50%, transparent 100%),
                 radial-gradient(ellipse at top, rgba(78, 167, 252, 0.05) 0%, transparent 70%);
             pointer-events: none;
-            z-index: -1;
+            z-index: -2;
         }
 
         /* Subtle grid pattern overlay */
@@ -145,8 +145,8 @@
             right: 0;
             bottom: 0;
             background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.008) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.008) 1px, transparent 1px);
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
             background-size: 60px 60px;
             pointer-events: none;
             z-index: -1;
@@ -303,7 +303,7 @@
             width: 60px;
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
-            border-radius: 1px;
+            border-radius: 2px;
         }
 
         h2.title {
@@ -401,7 +401,7 @@
         .status::before {
             content: '';
             position: absolute;
-            left: var(--spacing-sm);
+            left: var(--spacing-md);
             width: 8px;
             height: 8px;
             border-radius: 50%;
@@ -409,9 +409,9 @@
         }
 
         .status--success {
-            background: rgba(76, 183, 130, 0.12);
+            background: rgba(76, 183, 130, 0.15);
             color: var(--color-success);
-            border-color: rgba(76, 183, 130, 0.25);
+            border-color: rgba(76, 183, 130, 0.3);
         }
 
         .status--success::before {
@@ -420,9 +420,9 @@
         }
 
         .status--warning {
-            background: rgba(242, 201, 76, 0.12);
+            background: rgba(242, 201, 76, 0.15);
             color: var(--color-warning);
-            border-color: rgba(242, 201, 76, 0.25);
+            border-color: rgba(242, 201, 76, 0.3);
         }
 
         .status--warning::before {
@@ -431,9 +431,9 @@
         }
 
         .status--error {
-            background: rgba(235, 87, 87, 0.12);
+            background: rgba(235, 87, 87, 0.15);
             color: var(--color-error);
-            border-color: rgba(235, 87, 87, 0.25);
+            border-color: rgba(235, 87, 87, 0.3);
         }
 
         .status--error::before {
@@ -450,62 +450,7 @@
             margin-top: var(--spacing-xl);
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                padding: var(--spacing-2xl) var(--spacing-lg);
-            }
-
-            .grid {
-                grid-template-columns: 1fr;
-                gap: var(--spacing-xl);
-                margin-top: var(--spacing-2xl);
-            }
-
-            .button {
-                width: 100%;
-            }
-
-            .card {
-                padding: var(--spacing-xl);
-            }
-
-            h1.title {
-                margin-bottom: var(--spacing-2xl);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: var(--spacing-xl) var(--spacing-md);
-            }
-
-            .card {
-                padding: var(--spacing-lg);
-            }
-
-            .button-container,
-            .status-container {
-                gap: var(--spacing-md);
-            }
-        }
-
-        /* Accessibility */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        /* Focus states for accessibility */
-        .button:focus-visible {
-            outline: 2px solid var(--color-accent);
-            outline-offset: 2px;
-        }
-
-        /* Subtle animations */
+        /* Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -528,16 +473,19 @@
 
         @keyframes titleGlow {
             0%, 100% {
-                filter: brightness(1);
+                filter: drop-shadow(0 0 10px rgba(78, 167, 252, 0.3));
             }
             50% {
-                filter: brightness(1.1);
+                filter: drop-shadow(0 0 20px rgba(78, 167, 252, 0.5));
             }
+        }
+
+        h1.title {
+            animation: fadeInUp 1s ease-out, titleGlow 3s ease-in-out infinite;
         }
 
         .card {
             animation: fadeInUp 0.8s ease-out;
-            animation-fill-mode: both;
         }
 
         .card:nth-child(1) {
@@ -556,52 +504,86 @@
             animation: glow 2.5s ease-in-out infinite;
         }
 
-        h1.title {
-            animation: titleGlow 4s ease-in-out infinite;
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--spacing-2xl) var(--spacing-lg);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-xl);
+                margin-top: var(--spacing-2xl);
+            }
+
+            .button {
+                width: 100%;
+                min-height: 48px;
+            }
+
+            .card {
+                padding: var(--spacing-xl);
+            }
+
+            .button-container,
+            .status-container {
+                gap: var(--spacing-md);
+            }
         }
 
-        /* Enhanced hover effects */
+        @media (max-width: 480px) {
+            .container {
+                padding: var(--spacing-xl) var(--spacing-md);
+            }
+
+            .card {
+                padding: var(--spacing-lg);
+            }
+
+            .grid {
+                gap: var(--spacing-lg);
+            }
+
+            h2.title {
+                font-size: var(--font-size-lg);
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus states for accessibility */
+        .button:focus-visible {
+            outline: 2px solid var(--color-accent);
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(78, 167, 252, 0.2);
+        }
+
+        /* Enhanced hover effects for status indicators */
         .status:hover {
             transform: translateY(-1px);
             box-shadow: var(--shadow-sm);
         }
 
         .status--success:hover {
-            background: rgba(76, 183, 130, 0.18);
+            background: rgba(76, 183, 130, 0.2);
             border-color: rgba(76, 183, 130, 0.4);
         }
 
         .status--warning:hover {
-            background: rgba(242, 201, 76, 0.18);
+            background: rgba(242, 201, 76, 0.2);
             border-color: rgba(242, 201, 76, 0.4);
         }
 
         .status--error:hover {
-            background: rgba(235, 87, 87, 0.18);
+            background: rgba(235, 87, 87, 0.2);
             border-color: rgba(235, 87, 87, 0.4);
-        }
-
-        /* Loading state for buttons */
-        .button--loading {
-            pointer-events: none;
-            opacity: 0.8;
-        }
-
-        .button--loading::after {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            border: 2px solid transparent;
-            border-top: 2px solid currentColor;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
         }
     </style>
 </head>
