@@ -259,32 +259,22 @@
             }
         }
 
+        @media (max-width: 480px) {
+            .container {
+                padding: var(--spacing-lg);
+            }
+        }
+
         /* Dark Theme Support */
         [data-theme="light"] .button--secondary:not([disabled]):hover {
             filter: brightness(97%);
         }
 
-        /* Utility Classes */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-
-        .visually-hidden {
-            clip: rect(0 0 0 0);
-            clip-path: inset(50%);
-            height: 1px;
-            overflow: hidden;
-            position: absolute;
-            white-space: nowrap;
-            width: 1px;
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-primary: var(--color-secondary);
+                --color-secondary: #fff;
+            }
         }
     </style>
 </head>
@@ -315,7 +305,7 @@
             <div class="card">
                 <h2 class="title">Typography</h2>
                 <div style="margin-top: var(--spacing-2xl);">
-                    <p class="text">This is body text using the design system typography tokens with proper font family, size, weight, and line height.</p>
+                    <p class="text">This is body text using the design system typography tokens with proper spacing and color variables.</p>
                 </div>
             </div>
         </div>
