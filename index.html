@@ -51,12 +51,10 @@
             --color-text-secondary: #a1a1a1;
             --color-text-muted: #666666;
 
-            /* Accent Colors from Reference */
+            /* Accent Colors */
             --color-accent: #4ea7fc;
-            --color-accent-hover: #4cb782;
+            --color-accent-hover: #5b9cfc;
             --color-accent-glow: rgba(78, 167, 252, 0.3);
-
-            /* Status Colors */
             --color-success: #4cb782;
             --color-warning: #f2c94c;
             --color-error: #eb5757;
@@ -112,7 +110,11 @@
             font-weight: var(--font-weight-normal);
             line-height: var(--line-height);
             color: var(--color-text);
-            background: linear-gradient(135deg, var(--color-background) 0%, #0a0a0a 100%);
+            background: var(--color-background);
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(78, 167, 252, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(76, 183, 130, 0.1) 0%, transparent 50%);
             min-height: 100vh;
         }
 
@@ -125,8 +127,8 @@
             font-family: inherit;
             font-size: var(--font-size-sm);
             font-weight: var(--font-weight-medium);
-            line-height: 1.4;
-            border: 1px solid transparent;
+            line-height: 1.5;
+            border: none;
             border-radius: var(--border-radius);
             cursor: pointer;
             transition: all var(--transition);
@@ -145,44 +147,43 @@
 
         /* Button Variants */
         .button--primary {
-            background: linear-gradient(135deg, var(--color-accent) 0%, #5b8def 100%);
+            background: linear-gradient(135deg, var(--color-accent), #5b21b6);
             color: var(--color-text);
-            border-color: var(--color-accent);
-            box-shadow: var(--shadow-sm), 0 0 0 0 var(--color-accent-glow);
+            border: 1px solid transparent;
+            box-shadow: var(--shadow-sm), 0 0 0 1px rgba(78, 167, 252, 0.2);
         }
 
         .button--secondary {
-            background: var(--glass-bg);
+            background: var(--color-surface-elevated);
             color: var(--color-text);
-            border-color: var(--color-border);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--color-border);
+            backdrop-filter: blur(10px);
         }
 
         .button--tertiary {
-            background: var(--color-surface-elevated);
+            background: rgba(161, 161, 161, 0.1);
             color: var(--color-text-secondary);
-            border-color: var(--color-border-subtle);
+            border: 1px solid var(--color-border-subtle);
+            backdrop-filter: blur(10px);
         }
 
         /* Button Hover States */
         @media (any-hover: hover) {
             .button--primary:not([disabled]):hover {
-                background: linear-gradient(135deg, #5b8def 0%, var(--color-accent) 100%);
+                background: linear-gradient(135deg, var(--color-accent-hover), #6d28d9);
                 box-shadow: var(--shadow-md), var(--shadow-glow);
                 transform: translateY(-1px);
-                border-color: #5b8def;
             }
 
             .button--secondary:not([disabled]):hover {
                 background: rgba(17, 17, 17, 0.9);
-                border-color: var(--color-border);
-                transform: translateY(-1px);
+                border-color: var(--color-accent);
                 box-shadow: var(--shadow-md);
+                transform: translateY(-1px);
             }
 
             .button--tertiary:not([disabled]):hover {
-                background: #1a1a1a;
+                background: rgba(161, 161, 161, 0.15);
                 color: var(--color-text);
                 border-color: var(--color-border);
                 transform: translateY(-1px);
@@ -199,13 +200,13 @@
         .button--secondary:not([disabled]):active,
         .button--secondary.button--active:not([disabled]) {
             transform: translateY(0);
-            background: rgba(10, 10, 10, 0.95);
+            background: var(--color-surface);
         }
 
         .button--tertiary:not([disabled]):active,
         .button--tertiary.button--active:not([disabled]) {
             transform: translateY(0);
-            background: var(--color-surface);
+            background: rgba(161, 161, 161, 0.08);
         }
 
         /* Typography Components */
@@ -218,7 +219,7 @@
 
         h1.title {
             font-size: var(--font-size-3xl);
-            background: linear-gradient(135deg, var(--color-text) 0%, var(--color-text-secondary) 100%);
+            background: linear-gradient(135deg, var(--color-text), var(--color-text-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -227,7 +228,7 @@
 
         h2.title {
             font-size: var(--font-size-xl);
-            color: var(--color-text);
+            margin-bottom: var(--spacing-lg);
         }
 
         .text {
@@ -249,9 +250,9 @@
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             border-radius: var(--border-radius-lg);
-            padding: var(--spacing-xl);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            padding: var(--spacing-2xl);
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-lg);
             transition: all var(--transition);
             position: relative;
             overflow: hidden;
@@ -264,18 +265,18 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
         }
 
         .card:hover {
-            border-color: rgba(255, 255, 255, 0.15);
+            border-color: rgba(78, 167, 252, 0.3);
+            box-shadow: var(--shadow-lg), 0 0 30px rgba(78, 167, 252, 0.1);
             transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
         }
 
         .grid {
             display: grid;
-            gap: var(--spacing-xl);
+            gap: var(--spacing-2xl);
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             margin-top: var(--spacing-2xl);
         }
@@ -284,7 +285,7 @@
         .status {
             display: inline-flex;
             align-items: center;
-            padding: var(--spacing-xs) var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
             border-radius: var(--border-radius);
             font-size: var(--font-size-sm);
             font-weight: var(--font-weight-medium);
@@ -293,25 +294,32 @@
         }
 
         .status--success {
-            background: rgba(76, 183, 130, 0.1);
-            color: var(--color-success);
-            border-color: rgba(76, 183, 130, 0.2);
+            background: rgba(76, 183, 130, 0.15);
+            color: #4cb782;
+            border-color: rgba(76, 183, 130, 0.3);
         }
 
         .status--warning {
-            background: rgba(242, 201, 76, 0.1);
-            color: var(--color-warning);
-            border-color: rgba(242, 201, 76, 0.2);
+            background: rgba(242, 201, 76, 0.15);
+            color: #f2c94c;
+            border-color: rgba(242, 201, 76, 0.3);
         }
 
         .status--error {
-            background: rgba(235, 87, 87, 0.1);
-            color: var(--color-error);
-            border-color: rgba(235, 87, 87, 0.2);
+            background: rgba(235, 87, 87, 0.15);
+            color: #eb5757;
+            border-color: rgba(235, 87, 87, 0.3);
         }
 
-        /* Button and Status Container */
-        .component-showcase {
+        /* Button Container */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .status-container {
             display: flex;
             flex-direction: column;
             gap: var(--spacing-md);
@@ -321,12 +329,16 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             .container {
-                padding: var(--spacing-xl) var(--spacing-md);
+                padding: var(--spacing-xl);
             }
 
             .grid {
                 grid-template-columns: 1fr;
-                gap: var(--spacing-lg);
+                gap: var(--spacing-xl);
+            }
+
+            .button-container {
+                gap: var(--spacing-sm);
             }
 
             h1.title {
@@ -340,17 +352,15 @@
 
         @media (max-width: 480px) {
             .container {
-                padding: var(--spacing-lg) var(--spacing-sm);
-            }
-
-            .button {
-                width: 100%;
-                justify-content: center;
+                padding: var(--spacing-md);
             }
 
             h1.title {
                 font-size: var(--font-size-xl);
-                text-align: center;
+            }
+
+            .grid {
+                gap: var(--spacing-md);
             }
         }
 
@@ -367,29 +377,19 @@
         }
 
         .card {
-            animation: fadeInUp 0.6s ease-out;
+            animation: fadeInUp 0.6s ease forwards;
         }
 
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 8px;
+        .card:nth-child(2) {
+            animation-delay: 0.1s;
         }
 
-        ::-webkit-scrollbar-track {
-            background: var(--color-surface);
+        .card:nth-child(3) {
+            animation-delay: 0.2s;
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: var(--color-border);
-            border-radius: var(--border-radius-sm);
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.2);
+        .card:nth-child(4) {
+            animation-delay: 0.3s;
         }
     </style>
 </head>
@@ -400,7 +400,7 @@
         <div class="grid">
             <div class="card">
                 <h2 class="title">Button Components</h2>
-                <div class="component-showcase">
+                <div class="button-container">
                     <button class="button button--primary">Primary Button</button>
                     <button class="button button--secondary">Secondary Button</button>
                     <button class="button button--tertiary">Tertiary Button</button>
@@ -410,7 +410,7 @@
 
             <div class="card">
                 <h2 class="title">Status Indicators</h2>
-                <div class="component-showcase">
+                <div class="status-container">
                     <span class="status status--success">Success Status</span>
                     <span class="status status--warning">Warning Status</span>
                     <span class="status status--error">Error Status</span>
