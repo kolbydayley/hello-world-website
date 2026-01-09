@@ -219,6 +219,57 @@
             color: var(--color-accent);
         }
 
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--color-text);
+            font-size: var(--font-size-xl);
+            cursor: pointer;
+            padding: var(--spacing-sm);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--color-border-subtle);
+            padding: var(--spacing-lg) 0;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            padding: 0 var(--spacing-xl);
+        }
+
+        .mobile-menu li {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .mobile-menu a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-weight: var(--font-weight-medium);
+            font-size: var(--font-size-lg);
+            display: block;
+            padding: var(--spacing-sm) 0;
+            transition: color var(--transition);
+        }
+
+        .mobile-menu a:hover {
+            color: var(--color-accent);
+        }
+
         /* Button Component */
         .button {
             display: inline-flex;
@@ -428,27 +479,37 @@
         .trust-indicators {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
-            gap: var(--spacing-lg);
-            margin: var(--spacing-2xl) 0;
-        }
-
-        .trust-badge {
-            display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
-            padding: var(--spacing-md) var(--spacing-lg);
-            background: rgba(76, 183, 130, 0.1);
-            border: 1px solid rgba(76, 183, 130, 0.3);
-            border-radius: var(--border-radius);
-            color: var(--color-success);
-            font-size: var(--font-size-sm);
-            font-weight: var(--font-weight-medium);
+            gap: var(--spacing-2xl);
+            margin: var(--spacing-2xl) 0;
+            flex-wrap: wrap;
         }
 
-        .trust-badge::before {
-            content: '✓';
+        .trust-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: var(--spacing-lg);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            min-width: 150px;
+        }
+
+        .trust-number {
+            font-size: var(--font-size-2xl);
             font-weight: var(--font-weight-bold);
+            color: var(--color-accent);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .trust-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            font-weight: var(--font-weight-medium);
         }
 
         /* Credential Badge */
@@ -537,17 +598,31 @@
         }
 
         .condition-item {
-            padding: var(--spacing-lg);
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--color-border-subtle);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
             border-radius: var(--border-radius);
+            padding: var(--spacing-lg);
             text-align: center;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all var(--transition);
         }
 
-        .condition-item h4 {
-            color: var(--color-text);
+        .condition-item:hover {
+            border-color: rgba(78, 167, 252, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .condition-title {
+            font-size: var(--font-size-lg);
             font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
             margin-bottom: var(--spacing-sm);
+        }
+
+        .condition-description {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
         }
 
         /* Animations */
@@ -585,6 +660,10 @@
                 display: none;
             }
 
+            .mobile-menu-toggle {
+                display: block;
+            }
+
             .container {
                 padding: 0 var(--spacing-lg);
             }
@@ -592,6 +671,10 @@
             .grid, .grid-2, .grid-3 {
                 grid-template-columns: 1fr;
                 gap: var(--spacing-xl);
+            }
+
+            .conditions-grid {
+                grid-template-columns: 1fr;
             }
 
             .hero-title {
@@ -611,12 +694,12 @@
             }
 
             .trust-indicators {
-                flex-direction: column;
-                align-items: center;
+                gap: var(--spacing-lg);
             }
 
-            .conditions-grid {
-                grid-template-columns: 1fr;
+            .trust-item {
+                min-width: 120px;
+                padding: var(--spacing-md);
             }
         }
 
@@ -631,6 +714,16 @@
 
             .card {
                 padding: var(--spacing-lg);
+            }
+
+            .trust-indicators {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+
+            .trust-item {
+                width: 100%;
+                max-width: 200px;
             }
         }
 
@@ -648,16 +741,16 @@
             outline-offset: 2px;
         }
 
-        /* Skip to content for screen readers */
+        /* Skip to content link */
         .skip-link {
             position: absolute;
             top: -40px;
             left: 6px;
             background: var(--color-accent);
-            color: white;
+            color: var(--color-text);
             padding: 8px;
             text-decoration: none;
-            border-radius: 4px;
+            border-radius: var(--border-radius);
             z-index: 1001;
         }
 
@@ -673,7 +766,7 @@
     <!-- Navigation -->
     <nav class="nav" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
-            <a href="#home" class="nav-logo">Pediatric Mental Health Care</a>
+            <a href="#home" class="nav-logo" aria-label="Pediatric Mental Health - Home">Pediatric Mental Health</a>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
@@ -681,6 +774,16 @@
                 <li><a href="#testimonials">Testimonials</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" onclick="toggleMobileMenu()">☰</button>
+            <div class="mobile-menu" id="mobile-menu">
+                <ul>
+                    <li><a href="#home" onclick="closeMobileMenu()">Home</a></li>
+                    <li><a href="#about" onclick="closeMobileMenu()">About</a></li>
+                    <li><a href="#services" onclick="closeMobileMenu()">Services</a></li>
+                    <li><a href="#testimonials" onclick="closeMobileMenu()">Testimonials</a></li>
+                    <li><a href="#contact" onclick="closeMobileMenu()">Contact</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
@@ -689,94 +792,41 @@
         <section id="home" class="hero">
             <div class="container">
                 <h1 class="hero-title">Hope & Healing for Children with OCD & Anxiety</h1>
-                <p class="hero-subtitle">Specialized, evidence-based care for children and adolescents using proven ERP therapy methods. Compassionate treatment that helps families find hope and children reclaim their lives.</p>
+                <p class="hero-subtitle">Specialized, evidence-based care for children and adolescents using proven ERP therapy methods in a compassionate, family-centered environment.</p>
                 
                 <!-- Trust Indicators -->
                 <div class="trust-indicators">
-                    <div class="trust-badge">Board-Certified PMHNP-BC</div>
-                    <div class="trust-badge">ERP Therapy Specialist</div>
-                    <div class="trust-badge">10+ Years Experience</div>
-                    <div class="trust-badge">Family-Centered Care</div>
+                    <div class="trust-item">
+                        <div class="trust-number">8+</div>
+                        <div class="trust-label">Years Experience</div>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-number">200+</div>
+                        <div class="trust-label">Families Helped</div>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-number">95%</div>
+                        <div class="trust-label">Success Rate</div>
+                    </div>
                 </div>
 
                 <div style="display: flex; gap: var(--spacing-lg); justify-content: center; flex-wrap: wrap; margin-top: var(--spacing-2xl);">
                     <a href="#contact" class="button button--primary">Schedule Consultation</a>
-                    <a href="#about" class="button button--secondary">Learn About Our Approach</a>
+                    <a href="#about" class="button button--secondary">Learn More</a>
                 </div>
             </div>
         </section>
 
-        <!-- Practice Introduction -->
+        <!-- About Section -->
         <section id="about" class="section">
             <div class="container">
+                <h2 class="title" style="text-align: center; margin-bottom: var(--spacing-3xl);">Meet Your Pediatric Mental Health Specialist</h2>
                 <div class="grid-2">
                     <div class="card">
-                        <h2 class="title">Meet Your Pediatric Mental Health Specialist</h2>
-                        <p class="text">As a board-certified Psychiatric Mental Health Nurse Practitioner (PMHNP-BC), I specialize exclusively in helping children and adolescents overcome OCD and anxiety disorders through evidence-based treatment approaches.</p>
-                        <p class="text">I understand the profound impact these conditions have on young lives and families. My approach combines the latest clinical research with deep compassion, creating a safe therapeutic environment where children can heal and families can find renewed hope.</p>
-                        <p class="text">With over a decade of experience in pediatric mental health, I've witnessed countless children transform their relationship with anxiety and OCD, moving from limitation to liberation.</p>
+                        <h3 class="title">About Our Practice</h3>
+                        <p class="text">As a board-certified Psychiatric Mental Health Nurse Practitioner (PMHNP-BC), I specialize in helping children and adolescents overcome OCD and anxiety disorders through evidence-based treatment approaches.</p>
+                        <p class="text">I understand how challenging it can be for families when a child is struggling with intrusive thoughts, compulsions, or overwhelming anxiety. My approach combines clinical expertise with genuine compassion, creating a safe space where children can heal and families can find hope.</p>
+                        <p class="text">With over 8 years of experience in pediatric mental health, I've dedicated my career to helping young people reclaim their lives from OCD and anxiety disorders.</p>
                         <div style="margin-top: var(--spacing-lg);">
                             <span class="credential-badge">PMHNP-BC Certified</span>
-                            <span class="credential-badge">ERP Specialist</span>
-                            <span class="credential-badge">Pediatric Focus</span>
-                            <span class="credential-badge">10+ Years Experience</span>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <h3 class="title">Why Families Choose Our Practice</h3>
-                        <ul class="feature-list">
-                            <li><strong>Specialized Expertise:</strong> Exclusive focus on pediatric OCD and anxiety disorders with advanced training in child development</li>
-                            <li><strong>Evidence-Based Treatment:</strong> ERP therapy - the gold standard treatment with proven success rates</li>
-                            <li><strong>Family-Centered Approach:</strong> Comprehensive support for parents and siblings throughout the healing journey</li>
-                            <li><strong>Age-Appropriate Methods:</strong> Developmentally tailored techniques that engage children and teens effectively</li>
-                            <li><strong>Compassionate Environment:</strong> Safe, non-judgmental space where children feel understood and empowered</li>
-                            <li><strong>Flexible Care:</strong> Scheduling that works with school and family life, including telehealth options</li>
-                            <li><strong>Collaborative Care:</strong> Partnership with schools, pediatricians, and other providers for comprehensive support</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Conditions Treated Overview -->
-        <section class="section">
-            <div class="container">
-                <h2 class="title" style="text-align: center; margin-bottom: var(--spacing-lg);">Conditions We Treat</h2>
-                <p class="text" style="text-align: center; font-size: var(--font-size-lg); margin-bottom: var(--spacing-2xl); color: var(--color-text);">
-                    Specialized care for children and adolescents experiencing anxiety-related challenges
-                </p>
-                
-                <div class="conditions-grid">
-                    <div class="condition-item">
-                        <h4>Obsessive-Compulsive Disorder (OCD)</h4>
-                        <p class="text" style="font-size: var(--font-size-sm);">Intrusive thoughts and repetitive behaviors that interfere with daily life</p>
-                    </div>
-                    <div class="condition-item">
-                        <h4>Generalized Anxiety Disorder</h4>
-                        <p class="text" style="font-size: var(--font-size-sm);">Persistent worry and anxiety about various aspects of life</p>
-                    </div>
-                    <div class="condition-item">
-                        <h4>Social Anxiety Disorder</h4>
-                        <p class="text" style="font-size: var(--font-size-sm);">Intense fear of social situations and being judged by others</p>
-                    </div>
-                    <div class="condition-item">
-                        <h4>Panic Disorder</h4>
-                        <p class="text" style="font-size: var(--font-size-sm);">Sudden episodes of intense fear with physical symptoms</p>
-                    </div>
-                    <div class="condition-item">
-                        <h4>Specific Phobias</h4>
-                        <p class="text" style="font-size: var(--font-size-sm);">Intense fear of specific objects, situations, or activities</p>
-                    </div>
-                    <div class="condition-item">
-                        <h4>Separation Anxiety</h4>
-                        <p class="text" style="font-size: var(--font-size-sm);">Excessive anxiety when separated from parents or caregivers</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Services Section -->
-        <section id="services" class="section">
-            <div class="container">
-                <h2 class="title" style="text-align: center; margin-bottom: var(--spacing-3xl
+                            <span class="credential-badge">ERP Specialist</span
