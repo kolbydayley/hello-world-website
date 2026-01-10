@@ -626,80 +626,15 @@
         }
 
         /* Why Choose Us Section */
-        .why-choose-grid {
-            display: grid;
-            gap: var(--spacing-xl);
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            margin: var(--spacing-2xl) 0;
-        }
-
-        .why-choose-item {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--border-radius-lg);
-            padding: var(--spacing-xl);
+        .why-choose-us {
+            background: 
+                linear-gradient(135deg, rgba(76, 183, 130, 0.08) 0%, rgba(78, 167, 252, 0.05) 100%),
+                var(--glass-bg);
+            border: 1px solid rgba(76, 183, 130, 0.2);
+            border-radius: var(--border-radius-xl);
+            padding: var(--spacing-3xl);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            transition: all var(--transition);
-            text-align: center;
-        }
-
-        .why-choose-item:hover {
-            border-color: rgba(78, 167, 252, 0.3);
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-4px);
-        }
-
-        .why-choose-icon {
-            font-size: var(--font-size-3xl);
-            margin-bottom: var(--spacing-md);
-            color: var(--color-accent);
-        }
-
-        /* Contact Form */
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: var(--spacing-sm);
-            color: var(--color-text);
-            font-weight: var(--font-weight-medium);
-            font-size: var(--font-size-sm);
-        }
-
-        .form-input,
-        .form-textarea {
-            width: 100%;
-            padding: var(--spacing-md);
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--border-radius);
-            color: var(--color-text);
-            font-family: inherit;
-            font-size: var(--font-size-base);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            transition: all var(--transition);
-        }
-
-        .form-input:focus,
-        .form-textarea:focus {
-            outline: none;
-            border-color: var(--color-accent);
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 0 0 3px rgba(78, 167, 252, 0.1);
-        }
-
-        .form-textarea {
-            min-height: 120px;
-            resize: vertical;
         }
 
         /* Animations */
@@ -750,8 +685,7 @@
                 gap: var(--spacing-xl);
             }
 
-            .conditions-grid,
-            .why-choose-grid {
+            .conditions-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -866,4 +800,41 @@
     </nav>
 
     <main id="main-content">
-        <!-- Hero
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="container">
+                <h1 class="hero-title">Hope & Healing for Children with OCD & Anxiety</h1>
+                <p class="hero-subtitle">Specialized, evidence-based care for children and adolescents using proven ERP therapy methods in a compassionate, family-centered environment.</p>
+                
+                <!-- Trust Indicators -->
+                <div class="trust-indicators">
+                    <div class="trust-item">
+                        <div class="trust-number">8+</div>
+                        <div class="trust-label">Years Experience</div>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-number">200+</div>
+                        <div class="trust-label">Families Helped</div>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-number">95%</div>
+                        <div class="trust-label">Success Rate</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: var(--spacing-lg); justify-content: center; flex-wrap: wrap; margin-top: var(--spacing-2xl);">
+                    <a href="#contact" class="button button--primary">Schedule Consultation</a>
+                    <a href="#about" class="button button--secondary">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="title" style="text-align: center; margin-bottom: var(--spacing-3xl);">Meet Your Pediatric Mental Health Specialist</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3 class="title">About Our Practice</h3>
+                        <p class="text">As a board-certified Psychiatric Mental Health Nurse Practitioner (PMHNP-BC), I specialize in helping children and adolescents overcome OCD and anxiety disorders through evidence-based treatment approaches.</p>
+                        <p class="text">I
