@@ -2,6 +2,9 @@
   "name": "hello-world-website",
   "version": "1.0.0",
   "scripts": {
-    "start": "npx serve . -l $PORT"
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
   }
 }
