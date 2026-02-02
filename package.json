@@ -1,5 +1,5 @@
 {
-  "name": "hello-world-website",
+  "name": "keystone-dashboards",
   "version": "1.0.0",
   "scripts": {
     "start": "node server.js"
