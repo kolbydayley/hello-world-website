@@ -10,6 +10,12 @@ const DASH_DIR = path.join(__dirname, 'dashboards');
 const DASHBOARD_PASSWORD = process.env.DASHBOARD_PASSWORD || 'kolby2026';
 const COOKIE_SECRET = process.env.COOKIE_SECRET || crypto.randomBytes(32).toString('hex');
 const COOKIE_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+const PUBLIC_DASHBOARDS = new Set(
+  (process.env.PUBLIC_DASHBOARDS || '')
+    .split(',')
+    .map(s => s.trim())
+    .filter(Boolean)
+);
 
 // Ensure dashboards directory exists
 if (!fs.existsSync(DASH_DIR)) fs.mkdirSync(DASH_DIR, { recursive: true });
@@ -105,22 +111,22 @@ ${errorHtml}
 
 // --- Auth middleware for /d/*.html routes ---
 app.get('/d/:name.html', (req, res, next) => {
-  if (isAuthenticated(req)) {
-    // Serve the file directly
-    const filePath = path.join(DASH_DIR, `${req.params.name}.html`);
-    if (fs.existsSync(filePath)) {
-      res.type('html').send(fs.readFileSync(filePath, 'utf8'));
-    } else {
-      res.status(404).send('Dashboard not found');
-    }
-  } else {
-    // Serve login page — NO dashboard data
-    const loginHtml = renderLoginPage(null).replace(
-      'name="redirect" value=""',
-      `name="redirect" value="/d/${req.params.name}.html"`
-    );
-    res.type('html').send(loginHtml);
+  const name = req.params.name;
+  const filePath = path.join(DASH_DIR, `${name}.html`);
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).send('Dashboard not found');
   }
+
+  if (PUBLIC_DASHBOARDS.has(name) || isAuthenticated(req)) {
+    return res.type('html').send(fs.readFileSync(filePath, 'utf8'));
+  }
+
+  // Serve login page — NO dashboard data
+  const loginHtml = renderLoginPage(null).replace(
+    'name="redirect" value=""',
+    `name="redirect" value="/d/${name}.html"`
+  );
+  res.type('html').send(loginHtml);
 });
 
 // --- Login POST endpoint ---
