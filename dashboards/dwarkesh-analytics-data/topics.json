@@ -1,0 +1,312 @@
+{
+  "taxonomy": {
+    "AI labs": [
+      "openai",
+      "anthropic",
+      "deepmind",
+      "google deepmind",
+      "google brain",
+      "meta ai",
+      "mistral",
+      "stability ai",
+      "xai",
+      "cohere"
+    ],
+    "Scaling laws": [
+      "scaling law",
+      "scaling laws",
+      "scaling",
+      "exponential",
+      "scaling curve"
+    ],
+    "Reinforcement learning": [
+      "reinforcement learning",
+      "rl",
+      "policy gradient",
+      "ppo",
+      "q-learning"
+    ],
+    "Inference & serving": [
+      "inference",
+      "serving",
+      "deployment",
+      "latency",
+      "throughput"
+    ],
+    "Training & finetuning": [
+      "training",
+      "pretraining",
+      "fine-tuning",
+      "finetuning",
+      "finetune"
+    ],
+    "Chips & GPUs": [
+      "gpu",
+      "gpus",
+      "nvidia",
+      "cuda",
+      "h100",
+      "a100",
+      "chip",
+      "chips",
+      "semiconductor",
+      "tsmc",
+      "asml"
+    ],
+    "Data centers": [
+      "data center",
+      "datacenter",
+      "energy",
+      "power",
+      "electricity",
+      "cooling"
+    ],
+    "Models & architectures": [
+      "transformer",
+      "llm",
+      "language model",
+      "diffusion",
+      "mixture of experts",
+      "moe"
+    ],
+    "Alignment & safety": [
+      "alignment",
+      "safety",
+      "risk",
+      "catastrophic",
+      "control",
+      "interpretability",
+      "evals",
+      "evaluation"
+    ],
+    "AGI": [
+      "agi",
+      "superintelligence",
+      "general intelligence"
+    ],
+    "Robotics": [
+      "robot",
+      "robotics",
+      "embodied",
+      "automation"
+    ],
+    "Open source": [
+      "open source",
+      "opensource",
+      "open weights",
+      "open model"
+    ],
+    "Regulation & governance": [
+      "regulation",
+      "governance",
+      "policy",
+      "export control",
+      "national security",
+      "china",
+      "white house",
+      "eu"
+    ],
+    "Economics & labor": [
+      "productivity",
+      "jobs",
+      "labor",
+      "wages",
+      "gdp",
+      "economy"
+    ],
+    "Applications & products": [
+      "product",
+      "application",
+      "use case",
+      "enterprise",
+      "consumer",
+      "assistant",
+      "copilot"
+    ],
+    "Research": [
+      "research",
+      "paper",
+      "benchmark",
+      "dataset",
+      "experiment"
+    ],
+    "Chip supply chain": [
+      "supply chain",
+      "fab",
+      "foundry",
+      "wafer",
+      "lithography"
+    ],
+    "Compute bottlenecks": [
+      "bottleneck",
+      "compute constraint",
+      "gpu shortage",
+      "scarcity"
+    ],
+    "Security & defense": [
+      "security",
+      "cyber",
+      "defense",
+      "military"
+    ]
+  },
+  "topic_summary": [
+    {
+      "topic": "Regulation & governance",
+      "count": 1022,
+      "per_1k_words": 1.09
+    },
+    {
+      "topic": "Data centers",
+      "count": 970,
+      "per_1k_words": 1.03
+    },
+    {
+      "topic": "Alignment & safety",
+      "count": 881,
+      "per_1k_words": 0.94
+    },
+    {
+      "topic": "Research",
+      "count": 802,
+      "per_1k_words": 0.85
+    },
+    {
+      "topic": "Economics & labor",
+      "count": 729,
+      "per_1k_words": 0.78
+    },
+    {
+      "topic": "Training & finetuning",
+      "count": 670,
+      "per_1k_words": 0.71
+    },
+    {
+      "topic": "Chips & GPUs",
+      "count": 526,
+      "per_1k_words": 0.56
+    },
+    {
+      "topic": "Security & defense",
+      "count": 392,
+      "per_1k_words": 0.42
+    },
+    {
+      "topic": "AGI",
+      "count": 343,
+      "per_1k_words": 0.36
+    },
+    {
+      "topic": "AI labs",
+      "count": 319,
+      "per_1k_words": 0.34
+    },
+    {
+      "topic": "Scaling laws",
+      "count": 307,
+      "per_1k_words": 0.33
+    },
+    {
+      "topic": "Applications & products",
+      "count": 226,
+      "per_1k_words": 0.24
+    },
+    {
+      "topic": "Inference & serving",
+      "count": 198,
+      "per_1k_words": 0.21
+    },
+    {
+      "topic": "Reinforcement learning",
+      "count": 175,
+      "per_1k_words": 0.19
+    },
+    {
+      "topic": "Models & architectures",
+      "count": 175,
+      "per_1k_words": 0.19
+    },
+    {
+      "topic": "Robotics",
+      "count": 140,
+      "per_1k_words": 0.15
+    },
+    {
+      "topic": "Open source",
+      "count": 138,
+      "per_1k_words": 0.15
+    },
+    {
+      "topic": "Compute bottlenecks",
+      "count": 68,
+      "per_1k_words": 0.07
+    },
+    {
+      "topic": "Chip supply chain",
+      "count": 66,
+      "per_1k_words": 0.07
+    }
+  ],
+  "top_topics": [
+    {
+      "topic": "Regulation & governance",
+      "count": 1022,
+      "per_1k_words": 1.09
+    },
+    {
+      "topic": "Data centers",
+      "count": 970,
+      "per_1k_words": 1.03
+    },
+    {
+      "topic": "Alignment & safety",
+      "count": 881,
+      "per_1k_words": 0.94
+    },
+    {
+      "topic": "Research",
+      "count": 802,
+      "per_1k_words": 0.85
+    },
+    {
+      "topic": "Economics & labor",
+      "count": 729,
+      "per_1k_words": 0.78
+    },
+    {
+      "topic": "Training & finetuning",
+      "count": 670,
+      "per_1k_words": 0.71
+    },
+    {
+      "topic": "Chips & GPUs",
+      "count": 526,
+      "per_1k_words": 0.56
+    },
+    {
+      "topic": "Security & defense",
+      "count": 392,
+      "per_1k_words": 0.42
+    },
+    {
+      "topic": "AGI",
+      "count": 343,
+      "per_1k_words": 0.36
+    },
+    {
+      "topic": "AI labs",
+      "count": 319,
+      "per_1k_words": 0.34
+    },
+    {
+      "topic": "Scaling laws",
+      "count": 307,
+      "per_1k_words": 0.33
+    },
+    {
+      "topic": "Applications & products",
+      "count": 226,
+      "per_1k_words": 0.24
+    }
+  ]
+}

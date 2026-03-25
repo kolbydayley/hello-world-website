@@ -5,5 +5,7 @@
   "coverage_pct": 61.7,
   "total_words": 940642,
   "avg_words_per_episode": 5003.4,
-  "avg_words_per_minute": 178.21
+  "avg_words_per_minute": 178.21,
+  "unique_guests": 107,
+  "curated_topics": 19
 }

@@ -1,0 +1,184 @@
+{
+  "topics": [
+    {
+      "phrase": "don t",
+      "score": 1234.44,
+      "count": 732,
+      "doc_freq": 34
+    },
+    {
+      "phrase": "think s",
+      "score": 564.69,
+      "count": 257,
+      "doc_freq": 20
+    },
+    {
+      "phrase": "united states",
+      "score": 503.87,
+      "count": 335,
+      "doc_freq": 41
+    },
+    {
+      "phrase": "t know",
+      "score": 438.39,
+      "count": 221,
+      "doc_freq": 25
+    },
+    {
+      "phrase": "world war",
+      "score": 423.5,
+      "count": 264,
+      "doc_freq": 37
+    },
+    {
+      "phrase": "s like",
+      "score": 422.78,
+      "count": 209,
+      "doc_freq": 24
+    },
+    {
+      "phrase": "don t know",
+      "score": 414.69,
+      "count": 205,
+      "doc_freq": 24
+    },
+    {
+      "phrase": "um know",
+      "score": 395.72,
+      "count": 215,
+      "doc_freq": 29
+    },
+    {
+      "phrase": "just like",
+      "score": 392.79,
+      "count": 368,
+      "doc_freq": 64
+    },
+    {
+      "phrase": "right now",
+      "score": 387.82,
+      "count": 338,
+      "doc_freq": 59
+    },
+    {
+      "phrase": "didn t",
+      "score": 385.95,
+      "count": 168,
+      "doc_freq": 18
+    },
+    {
+      "phrase": "doesn t",
+      "score": 384.51,
+      "count": 175,
+      "doc_freq": 20
+    },
+    {
+      "phrase": "new york",
+      "score": 382.83,
+      "count": 178,
+      "doc_freq": 21
+    },
+    {
+      "phrase": "something like",
+      "score": 380.09,
+      "count": 351,
+      "doc_freq": 63
+    },
+    {
+      "phrase": "s just",
+      "score": 370.19,
+      "count": 183,
+      "doc_freq": 24
+    },
+    {
+      "phrase": "years ago",
+      "score": 361.68,
+      "count": 272,
+      "doc_freq": 49
+    },
+    {
+      "phrase": "uh know",
+      "score": 339.81,
+      "count": 158,
+      "doc_freq": 21
+    },
+    {
+      "phrase": "like know",
+      "score": 339.15,
+      "count": 240,
+      "doc_freq": 45
+    },
+    {
+      "phrase": "seems like",
+      "score": 335.53,
+      "count": 260,
+      "doc_freq": 51
+    },
+    {
+      "phrase": "open source",
+      "score": 335.51,
+      "count": 156,
+      "doc_freq": 21
+    },
+    {
+      "phrase": "re going",
+      "score": 333.36,
+      "count": 155,
+      "doc_freq": 21
+    },
+    {
+      "phrase": "s going",
+      "score": 329.19,
+      "count": 140,
+      "doc_freq": 17
+    },
+    {
+      "phrase": "um uh",
+      "score": 328.11,
+      "count": 188,
+      "doc_freq": 32
+    },
+    {
+      "phrase": "things like",
+      "score": 321.89,
+      "count": 293,
+      "doc_freq": 62
+    },
+    {
+      "phrase": "gpt 4",
+      "score": 314.2,
+      "count": 143,
+      "doc_freq": 20
+    },
+    {
+      "phrase": "little bit",
+      "score": 309.43,
+      "count": 247,
+      "doc_freq": 53
+    },
+    {
+      "phrase": "black hole",
+      "score": 303.6,
+      "count": 88,
+      "doc_freq": 5
+    },
+    {
+      "phrase": "000 years",
+      "score": 297.12,
+      "count": 111,
+      "doc_freq": 12
+    },
+    {
+      "phrase": "like oh",
+      "score": 296.47,
+      "count": 194,
+      "doc_freq": 40
+    },
+    {
+      "phrase": "know like",
+      "score": 288.53,
+      "count": 174,
+      "doc_freq": 35
+    }
+  ]
+}

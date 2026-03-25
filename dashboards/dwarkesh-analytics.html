@@ -14,6 +14,7 @@
     --muted: #94a3b8;
     --accent: #7c3aed;
     --accent-2: #22d3ee;
+    --accent-3: #f97316;
   }
   * { box-sizing: border-box; }
   body {
@@ -61,21 +62,32 @@
 <body>
 <header>
   <h1>Dwarkesh Transcript Analytics</h1>
-  <p>Mobile-first analytics on transcript content, themes, similarity, and disagreement markers.</p>
+  <p>Topic evolution and consensus/divisiveness across guests, ordered by the video list.</p>
 </header>
 
 <div class="grid cards" id="summary-cards"></div>
 
-<h2 class="section-title">Trends (ordered by video list order)</h2>
+<h2 class="section-title">Topic evolution (curated topics)</h2>
 <div class="grid two-col">
-  <div class="card chart-card"><canvas id="trend-words"></canvas></div>
-  <div class="card chart-card"><canvas id="trend-disagree"></canvas></div>
+  <div class="card chart-card"><canvas id="trend-topics"></canvas></div>
+  <div class="card chart-card"><canvas id="top-topics"></canvas></div>
 </div>
 
-<h2 class="section-title">Top terms & entities</h2>
+<h2 class="section-title">Emergent topics (auto-extracted n-grams)</h2>
+<div class="grid">
+  <div class="card list" id="emergent-list"></div>
+</div>
+
+<h2 class="section-title">Consensus vs divisive themes across guests</h2>
 <div class="grid two-col">
-  <div class="card chart-card"><canvas id="top-terms"></canvas></div>
-  <div class="card chart-card"><canvas id="top-entities"></canvas></div>
+  <div class="card">
+    <h3>Most consistent (agreement)</h3>
+    <table class="table" id="consensus-table"></table>
+  </div>
+  <div class="card">
+    <h3>Most contested (divisive)</h3>
+    <table class="table" id="divisive-table"></table>
+  </div>
 </div>
 
 <h2 class="section-title">Similarity (top 30 episode pairs)</h2>
@@ -85,13 +97,6 @@
 
 <h2 class="section-title">Topic clusters</h2>
 <div class="grid two-col" id="cluster-list"></div>
-
-<h2 class="section-title">Disagreement / contrast markers</h2>
-<div class="grid">
-  <div class="card">
-    <table class="table" id="disagreement-table"></table>
-  </div>
-</div>
 
 <h2 class="section-title">Longest episodes (by transcript words)</h2>
 <div class="grid">
@@ -108,13 +113,14 @@ const fetchJson = (name) => fetch(`/d/dwarkesh-analytics-data/${name}`).then(r =
 Promise.all([
   fetchJson('summary.json'),
   fetchJson('episodes.json'),
-  fetchJson('terms.json'),
-  fetchJson('trends.json'),
+  fetchJson('topics.json'),
+  fetchJson('topic_trends.json'),
+  fetchJson('emergent_topics.json'),
+  fetchJson('consensus.json'),
   fetchJson('similarity.json'),
   fetchJson('clusters.json'),
-  fetchJson('disagreement.json'),
   fetchJson('metadata.json'),
-]).then(([summary, episodes, terms, trends, similarity, clusters, disagreement, metadata]) => {
+]).then(([summary, episodes, topics, trends, emergent, consensus, similarity, clusters, metadata]) => {
   const summaryCards = document.getElementById('summary-cards');
   const addCard = (label, value) => {
     const div = document.createElement('div');
@@ -125,43 +131,50 @@ Promise.all([
   addCard('Total Episodes', summary.total_videos);
   addCard('Transcripts Available', summary.transcript_available);
   addCard('Coverage', `${summary.coverage_pct}%`);
-  addCard('Total Words', summary.total_words.toLocaleString());
+  addCard('Unique Guests', summary.unique_guests);
+  addCard('Curated Topics', summary.curated_topics);
   addCard('Avg Words/Episode', summary.avg_words_per_episode.toLocaleString());
-  addCard('Avg Words/Minute', summary.avg_words_per_minute);
 
   const bucketLabels = trends.buckets.map(b => `${b.start_order}-${b.end_order}`);
-  const wordData = trends.buckets.map(b => b.avg_word_count);
-  const qData = trends.buckets.map(b => b.question_rate_per_1k_words);
-  const dData = trends.buckets.map(b => b.disagreement_rate_per_1k_words);
+  const topicLines = trends.top_topics.map((topic, idx) => {
+    const colors = ['#7c3aed','#22d3ee','#f97316','#a3e635','#e879f9','#38bdf8','#fca5a5','#fbbf24'];
+    return {
+      label: topic,
+      data: trends.buckets.map(b => b.topics[topic] || 0),
+      borderColor: colors[idx % colors.length],
+      backgroundColor: 'transparent',
+      tension: 0.3,
+    };
+  });
 
-  new Chart(document.getElementById('trend-words'), {
+  new Chart(document.getElementById('trend-topics'), {
     type: 'line',
-    data: { labels: bucketLabels, datasets: [{ label: 'Avg words/episode', data: wordData, borderColor: '#7c3aed', backgroundColor: 'rgba(124,58,237,0.2)' }] },
-    options: { responsive: true, plugins: { legend: { display: false } } }
+    data: { labels: bucketLabels, datasets: topicLines },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
   });
 
-  new Chart(document.getElementById('trend-disagree'), {
-    type: 'line',
-    data: { labels: bucketLabels, datasets: [
-      { label: 'Questions per 1k words', data: qData, borderColor: '#22d3ee', backgroundColor: 'rgba(34,211,238,0.2)' },
-      { label: 'Disagreement per 1k words', data: dData, borderColor: '#f97316', backgroundColor: 'rgba(249,115,22,0.2)' }
-    ]},
-    options: { responsive: true }
-  });
-
-  const topTerms = terms.top_terms.slice(0, 15);
-  new Chart(document.getElementById('top-terms'), {
+  const topTopics = topics.top_topics || topics.topic_summary.slice(0, 12);
+  new Chart(document.getElementById('top-topics'), {
     type: 'bar',
-    data: { labels: topTerms.map(t => t.term), datasets: [{ label: 'Mentions', data: topTerms.map(t => t.count), backgroundColor: '#7c3aed' }] },
+    data: { labels: topTopics.map(t => t.topic), datasets: [{ label: 'Mentions', data: topTopics.map(t => t.count), backgroundColor: '#7c3aed' }] },
     options: { responsive: true, plugins: { legend: { display: false } } }
   });
 
-  const topEntities = terms.top_entities.slice(0, 15);
-  new Chart(document.getElementById('top-entities'), {
-    type: 'bar',
-    data: { labels: topEntities.map(t => t.entity), datasets: [{ label: 'Mentions', data: topEntities.map(t => t.count), backgroundColor: '#22d3ee' }] },
-    options: { responsive: true, plugins: { legend: { display: false } } }
+  const emergentList = document.getElementById('emergent-list');
+  emergent.topics.forEach(t => {
+    const div = document.createElement('div');
+    div.className = 'list-item';
+    div.innerHTML = `<span class="badge">${t.doc_freq} eps</span>${t.phrase} <span class="muted">(${t.count} mentions)</span>`;
+    emergentList.appendChild(div);
   });
+
+  const consensusTable = document.getElementById('consensus-table');
+  consensusTable.innerHTML = `<tr><th>Topic</th><th>Mean stance</th><th>Std dev</th><th>Guests</th></tr>` +
+    consensus.consensus.map(t => `<tr><td>${t.topic}</td><td>${t.mean_stance}</td><td>${t.stddev}</td><td>${t.guest_count}</td></tr>`).join('');
+
+  const divisiveTable = document.getElementById('divisive-table');
+  divisiveTable.innerHTML = `<tr><th>Topic</th><th>Mean stance</th><th>Std dev</th><th>Guests</th></tr>` +
+    consensus.divisive.map(t => `<tr><td>${t.topic}</td><td>${t.mean_stance}</td><td>${t.stddev}</td><td>${t.guest_count}</td></tr>`).join('');
 
   const similarityList = document.getElementById('similarity-list');
   similarity.top_similar.forEach(pair => {
@@ -182,21 +195,16 @@ Promise.all([
     clusterList.appendChild(div);
   });
 
-  const disagreementTable = document.getElementById('disagreement-table');
-  const phrases = disagreement.phrases.map(p => ({ phrase: p, count: disagreement.total_counts[p] || 0 }))
-    .sort((a,b) => b.count - a.count);
-  disagreementTable.innerHTML = `<tr><th>Phrase</th><th>Count</th></tr>` + phrases.map(p => `<tr><td>${p.phrase}</td><td>${p.count}</td></tr>`).join('');
-
   const episodeTable = document.getElementById('episode-table');
   const topEpisodes = [...episodes].sort((a,b) => b.word_count - a.word_count).slice(0, 12);
-  episodeTable.innerHTML = `<tr><th>Episode</th><th>Words</th><th>Questions/1k</th><th>Disagreement</th></tr>` +
+  episodeTable.innerHTML = `<tr><th>Episode</th><th>Guest</th><th>Words</th><th>Top topics</th></tr>` +
     topEpisodes.map(ep => {
-      const disagree = Object.values(ep.disagreement_counts).reduce((a,b) => a+b, 0);
-      return `<tr><td>${ep.title}</td><td>${ep.word_count}</td><td>${ep.question_rate_per_1k_words}</td><td>${disagree}</td></tr>`;
+      const topics = (ep.top_topics || []).map(t => t.topic).join(', ');
+      return `<tr><td>${ep.title}</td><td>${ep.guest || 'n/a'}</td><td>${ep.word_count}</td><td>${topics}</td></tr>`;
     }).join('');
 
   const foot = document.getElementById('footnote');
-  foot.innerHTML = `Generated ${metadata.generated_at || 'unknown'}. ${metadata.note}`;
+  foot.innerHTML = `Generated ${metadata.generated_at || 'unknown'}. ${metadata.note}<br/>${metadata.consensus_note}`;
 }).catch(err => {
   document.body.innerHTML = `<p style="padding:20px;color:#fca5a5">Failed to load analytics JSON: ${err}</p>`;
 });

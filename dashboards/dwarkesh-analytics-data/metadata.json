@@ -1,4 +1,5 @@
 {
   "generated_at": "2026-03-25T03:32:59Z",
-  "note": "Ordering is based on videos.json list order (upload dates missing). Duration from videos.json in seconds."
+  "note": "Ordering is based on videos.json list order (upload dates missing). Duration from videos.json in seconds.",
+  "consensus_note": "Consensus/divisiveness uses a simple stance lexicon around topic mentions; treat as heuristic, not a verdict."
 }
