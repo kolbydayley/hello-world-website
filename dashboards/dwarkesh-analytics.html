@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dwarkesh Podcast Transcript Analytics</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0b0d12;
+    --card: #161a22;
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+    --accent: #7c3aed;
+    --accent-2: #22d3ee;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  header {
+    padding: 20px 20px 12px;
+  }
+  h1 { font-size: 1.4rem; margin: 0 0 6px; }
+  p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+  .grid {
+    display: grid;
+    gap: 12px;
+    padding: 12px 20px 24px;
+  }
+  .cards { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.04);
+  }
+  .card h3 { margin: 0 0 6px; font-size: 0.95rem; }
+  .card .value { font-size: 1.2rem; font-weight: 600; }
+  .chart-card { padding: 14px; }
+  canvas { width: 100% !important; height: 260px !important; }
+  .two-col { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .list {
+    max-height: 320px;
+    overflow: auto;
+    font-size: 0.9rem;
+  }
+  .list-item { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .badge { display: inline-block; background: rgba(124,58,237,0.2); color: #c4b5fd; padding: 2px 8px; border-radius: 999px; font-size: 0.75rem; margin-right: 6px; }
+  .muted { color: var(--muted); }
+  .table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .table th, .table td { text-align: left; padding: 6px 4px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .section-title { font-size: 1.1rem; margin: 6px 20px 0; }
+  .footnote { padding: 0 20px 30px; font-size: 0.8rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Dwarkesh Transcript Analytics</h1>
+  <p>Mobile-first analytics on transcript content, themes, similarity, and disagreement markers.</p>
+</header>
+
+<div class="grid cards" id="summary-cards"></div>
+
+<h2 class="section-title">Trends (ordered by video list order)</h2>
+<div class="grid two-col">
+  <div class="card chart-card"><canvas id="trend-words"></canvas></div>
+  <div class="card chart-card"><canvas id="trend-disagree"></canvas></div>
+</div>
+
+<h2 class="section-title">Top terms & entities</h2>
+<div class="grid two-col">
+  <div class="card chart-card"><canvas id="top-terms"></canvas></div>
+  <div class="card chart-card"><canvas id="top-entities"></canvas></div>
+</div>
+
+<h2 class="section-title">Similarity (top 30 episode pairs)</h2>
+<div class="grid">
+  <div class="card list" id="similarity-list"></div>
+</div>
+
+<h2 class="section-title">Topic clusters</h2>
+<div class="grid two-col" id="cluster-list"></div>
+
+<h2 class="section-title">Disagreement / contrast markers</h2>
+<div class="grid">
+  <div class="card">
+    <table class="table" id="disagreement-table"></table>
+  </div>
+</div>
+
+<h2 class="section-title">Longest episodes (by transcript words)</h2>
+<div class="grid">
+  <div class="card">
+    <table class="table" id="episode-table"></table>
+  </div>
+</div>
+
+<div class="footnote" id="footnote"></div>
+
+<script>
+const fetchJson = (name) => fetch(`/d/dwarkesh-analytics-data/${name}`).then(r => r.json());
+
+Promise.all([
+  fetchJson('summary.json'),
+  fetchJson('episodes.json'),
+  fetchJson('terms.json'),
+  fetchJson('trends.json'),
+  fetchJson('similarity.json'),
+  fetchJson('clusters.json'),
+  fetchJson('disagreement.json'),
+  fetchJson('metadata.json'),
+]).then(([summary, episodes, terms, trends, similarity, clusters, disagreement, metadata]) => {
+  const summaryCards = document.getElementById('summary-cards');
+  const addCard = (label, value) => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerHTML = `<h3>${label}</h3><div class="value">${value}</div>`;
+    summaryCards.appendChild(div);
+  };
+  addCard('Total Episodes', summary.total_videos);
+  addCard('Transcripts Available', summary.transcript_available);
+  addCard('Coverage', `${summary.coverage_pct}%`);
+  addCard('Total Words', summary.total_words.toLocaleString());
+  addCard('Avg Words/Episode', summary.avg_words_per_episode.toLocaleString());
+  addCard('Avg Words/Minute', summary.avg_words_per_minute);
+
+  const bucketLabels = trends.buckets.map(b => `${b.start_order}-${b.end_order}`);
+  const wordData = trends.buckets.map(b => b.avg_word_count);
+  const qData = trends.buckets.map(b => b.question_rate_per_1k_words);
+  const dData = trends.buckets.map(b => b.disagreement_rate_per_1k_words);
+
+  new Chart(document.getElementById('trend-words'), {
+    type: 'line',
+    data: { labels: bucketLabels, datasets: [{ label: 'Avg words/episode', data: wordData, borderColor: '#7c3aed', backgroundColor: 'rgba(124,58,237,0.2)' }] },
+    options: { responsive: true, plugins: { legend: { display: false } } }
+  });
+
+  new Chart(document.getElementById('trend-disagree'), {
+    type: 'line',
+    data: { labels: bucketLabels, datasets: [
+      { label: 'Questions per 1k words', data: qData, borderColor: '#22d3ee', backgroundColor: 'rgba(34,211,238,0.2)' },
+      { label: 'Disagreement per 1k words', data: dData, borderColor: '#f97316', backgroundColor: 'rgba(249,115,22,0.2)' }
+    ]},
+    options: { responsive: true }
+  });
+
+  const topTerms = terms.top_terms.slice(0, 15);
+  new Chart(document.getElementById('top-terms'), {
+    type: 'bar',
+    data: { labels: topTerms.map(t => t.term), datasets: [{ label: 'Mentions', data: topTerms.map(t => t.count), backgroundColor: '#7c3aed' }] },
+    options: { responsive: true, plugins: { legend: { display: false } } }
+  });
+
+  const topEntities = terms.top_entities.slice(0, 15);
+  new Chart(document.getElementById('top-entities'), {
+    type: 'bar',
+    data: { labels: topEntities.map(t => t.entity), datasets: [{ label: 'Mentions', data: topEntities.map(t => t.count), backgroundColor: '#22d3ee' }] },
+    options: { responsive: true, plugins: { legend: { display: false } } }
+  });
+
+  const similarityList = document.getElementById('similarity-list');
+  similarity.top_similar.forEach(pair => {
+    const div = document.createElement('div');
+    div.className = 'list-item';
+    div.innerHTML = `<span class="badge">${pair.score}</span> ${pair.a_title} ↔ ${pair.b_title}`;
+    similarityList.appendChild(div);
+  });
+
+  const clusterList = document.getElementById('cluster-list');
+  const assignments = clusters.assignments;
+  const clusterCounts = {};
+  Object.values(assignments).forEach(c => { clusterCounts[c] = (clusterCounts[c] || 0) + 1; });
+  clusters.cluster_terms.forEach((terms, idx) => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerHTML = `<h3>Cluster ${idx + 1}</h3><p class="muted">${terms.join(', ') || 'n/a'}</p><p>${clusterCounts[idx] || 0} episodes</p>`;
+    clusterList.appendChild(div);
+  });
+
+  const disagreementTable = document.getElementById('disagreement-table');
+  const phrases = disagreement.phrases.map(p => ({ phrase: p, count: disagreement.total_counts[p] || 0 }))
+    .sort((a,b) => b.count - a.count);
+  disagreementTable.innerHTML = `<tr><th>Phrase</th><th>Count</th></tr>` + phrases.map(p => `<tr><td>${p.phrase}</td><td>${p.count}</td></tr>`).join('');
+
+  const episodeTable = document.getElementById('episode-table');
+  const topEpisodes = [...episodes].sort((a,b) => b.word_count - a.word_count).slice(0, 12);
+  episodeTable.innerHTML = `<tr><th>Episode</th><th>Words</th><th>Questions/1k</th><th>Disagreement</th></tr>` +
+    topEpisodes.map(ep => {
+      const disagree = Object.values(ep.disagreement_counts).reduce((a,b) => a+b, 0);
+      return `<tr><td>${ep.title}</td><td>${ep.word_count}</td><td>${ep.question_rate_per_1k_words}</td><td>${disagree}</td></tr>`;
+    }).join('');
+
+  const foot = document.getElementById('footnote');
+  foot.innerHTML = `Generated ${metadata.generated_at || 'unknown'}. ${metadata.note}`;
+}).catch(err => {
+  document.body.innerHTML = `<p style="padding:20px;color:#fca5a5">Failed to load analytics JSON: ${err}</p>`;
+});
+</script>
+</body>
+</html>

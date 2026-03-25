@@ -1,0 +1,81 @@
+{
+  "buckets": [
+    {
+      "start_order": 1,
+      "end_order": 18,
+      "avg_word_count": 0.0,
+      "question_rate_per_1k_words": 0,
+      "disagreement_rate_per_1k_words": 0
+    },
+    {
+      "start_order": 19,
+      "end_order": 36,
+      "avg_word_count": 9587.1,
+      "question_rate_per_1k_words": 69.84,
+      "disagreement_rate_per_1k_words": 10.39
+    },
+    {
+      "start_order": 37,
+      "end_order": 54,
+      "avg_word_count": 6993.5,
+      "question_rate_per_1k_words": 65.97,
+      "disagreement_rate_per_1k_words": 9.14
+    },
+    {
+      "start_order": 55,
+      "end_order": 72,
+      "avg_word_count": 7064.3,
+      "question_rate_per_1k_words": 69.17,
+      "disagreement_rate_per_1k_words": 8.71
+    },
+    {
+      "start_order": 73,
+      "end_order": 90,
+      "avg_word_count": 4588.6,
+      "question_rate_per_1k_words": 70.29,
+      "disagreement_rate_per_1k_words": 6.83
+    },
+    {
+      "start_order": 91,
+      "end_order": 108,
+      "avg_word_count": 3449.9,
+      "question_rate_per_1k_words": 70.42,
+      "disagreement_rate_per_1k_words": 9.5
+    },
+    {
+      "start_order": 109,
+      "end_order": 126,
+      "avg_word_count": 5900.7,
+      "question_rate_per_1k_words": 67.53,
+      "disagreement_rate_per_1k_words": 11.22
+    },
+    {
+      "start_order": 127,
+      "end_order": 144,
+      "avg_word_count": 8943.6,
+      "question_rate_per_1k_words": 72.12,
+      "disagreement_rate_per_1k_words": 9.1
+    },
+    {
+      "start_order": 145,
+      "end_order": 162,
+      "avg_word_count": 3148.7,
+      "question_rate_per_1k_words": 63.39,
+      "disagreement_rate_per_1k_words": 9.95
+    },
+    {
+      "start_order": 163,
+      "end_order": 180,
+      "avg_word_count": 2581.5,
+      "question_rate_per_1k_words": 64.2,
+      "disagreement_rate_per_1k_words": 11.13
+    },
+    {
+      "start_order": 181,
+      "end_order": 188,
+      "avg_word_count": 0.0,
+      "question_rate_per_1k_words": 0,
+      "disagreement_rate_per_1k_words": 0
+    }
+  ]
+}

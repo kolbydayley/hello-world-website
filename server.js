@@ -10,12 +10,25 @@ const DASH_DIR = path.join(__dirname, 'dashboards');
 const DASHBOARD_PASSWORD = process.env.DASHBOARD_PASSWORD || 'kolby2026';
 const COOKIE_SECRET = process.env.COOKIE_SECRET || crypto.randomBytes(32).toString('hex');
 const COOKIE_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
-const PUBLIC_DASHBOARDS = new Set(
-  (process.env.PUBLIC_DASHBOARDS || '')
+
+const OPENCLAW_DEBUG_LOG = path.join(__dirname, 'logs', 'openclaw-embed-debug.jsonl');
+if (!fs.existsSync(path.dirname(OPENCLAW_DEBUG_LOG))) fs.mkdirSync(path.dirname(OPENCLAW_DEBUG_LOG), { recursive: true });
+
+function appendEmbedDebug(entry) {
+  try {
+    fs.appendFileSync(OPENCLAW_DEBUG_LOG, JSON.stringify(entry) + '\n');
+  } catch (err) {
+    console.error('Failed to append embed debug log:', err);
+  }
+}
+
+const PUBLIC_DASHBOARDS = new Set([
+  ...(process.env.PUBLIC_DASHBOARDS || '')
     .split(',')
     .map(s => s.trim())
-    .filter(Boolean)
-);
+    .filter(Boolean),
+  'dwarkesh-analytics',
+]);
 
 // Ensure dashboards directory exists
 if (!fs.existsSync(DASH_DIR)) fs.mkdirSync(DASH_DIR, { recursive: true });
@@ -188,6 +201,59 @@ app.get('/', (req, res) => {
 <p class="sub">Interactive dashboards from your AI assistant</p>
 ${files.length ? cards : '<p class="empty">No dashboards yet.</p>'}
 </body></html>`);
+});
+
+
+
+// --- Authenticated OpenClaw token bridge for embedded dashboards ---
+function requireDashboardAuth(req, res, next) {
+  if (!isAuthenticated(req)) return res.status(401).json({ error: 'unauthorized' });
+  next();
+}
+
+app.get('/api/openclaw/bootstrap', requireDashboardAuth, (req, res) => {
+  const gatewayUrl = process.env.OPENCLAW_EMBED_GATEWAY_URL || 'wss://clawdbot-railway-production.up.railway.app';
+  const token = process.env.OPENCLAW_EMBED_TOKEN || process.env.OPENCLAW_GATEWAY_TOKEN || '';
+  const sessionKey = process.env.OPENCLAW_EMBED_SESSION_KEY || 'main';
+  if (!token) return res.status(500).json({ error: 'missing_openclaw_token' });
+  res.json({
+    gatewayUrl,
+    token,
+    sessionKey,
+    assistantName: process.env.OPENCLAW_ASSISTANT_NAME || 'Keel',
+    assistantAvatar: process.env.OPENCLAW_ASSISTANT_AVATAR || '⚓'
+  });
+});
+
+
+app.post('/api/openclaw/debug', requireDashboardAuth, (req, res) => {
+  const body = req.body || {};
+  const entries = Array.isArray(body.entries) ? body.entries : [];
+  const sessionId = typeof body.sessionId === 'string' ? body.sessionId : null;
+  const page = typeof body.page === 'string' ? body.page : null;
+  const userAgent = req.headers['user-agent'] || null;
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || null;
+  const receivedAt = new Date().toISOString();
+
+  for (const raw of entries.slice(-200)) {
+    appendEmbedDebug({
+      receivedAt,
+      sessionId,
+      page,
+      userAgent,
+      ip,
+      entry: raw
+    });
+  }
+
+  res.json({ ok: true, logged: Math.min(entries.length, 200) });
+});
+
+app.get('/api/openclaw/debug', requireDashboardAuth, (req, res) => {
+  const limit = Math.min(parseInt(req.query.limit || '200', 10) || 200, 1000);
+  if (!fs.existsSync(OPENCLAW_DEBUG_LOG)) return res.json({ ok: true, entries: [] });
+  const lines = fs.readFileSync(OPENCLAW_DEBUG_LOG, 'utf8').trim().split('\n').filter(Boolean).slice(-limit);
+  res.json({ ok: true, entries: lines.map(line => { try { return JSON.parse(line); } catch (_) { return { parseError: true, raw: line }; } }) });
 });
 
 // --- API: Push dashboard ---
